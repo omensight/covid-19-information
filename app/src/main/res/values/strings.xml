@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Coronavirus Information</string>
+    <string name="title_cases">Cases: </string>
+    <string name="title_deaths">Deaths</string>
+    <string name="title_regions">Regions</string>
+    <string name="title_total_recovered">Total recovered</string>
+    <string name="title_new_deaths">New deaths</string>
+    <string name="title_new_cases">Serious critical</string>
+</resources>

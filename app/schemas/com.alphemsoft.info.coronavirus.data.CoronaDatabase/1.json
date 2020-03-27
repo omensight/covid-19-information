@@ -1,0 +1,102 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "18284ff1bd29d4c81f139847456c53fd",
+    "entities": [
+      {
+        "tableName": "case_by_country",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`case_by_country_country_name_id` INTEGER NOT NULL, `case_by_country_cases` INTEGER NOT NULL, `case_by_country_deaths` INTEGER NOT NULL, `case_by_country_region` TEXT NOT NULL, `case_by_country_total_recovered` INTEGER NOT NULL, `case_by_country_new_deaths` INTEGER NOT NULL, `case_by_country_new_cases` INTEGER NOT NULL, `serious_critical` INTEGER NOT NULL, PRIMARY KEY(`case_by_country_country_name_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "case_by_country_country_name_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cases",
+            "columnName": "case_by_country_cases",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deaths",
+            "columnName": "case_by_country_deaths",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "region",
+            "columnName": "case_by_country_region",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalRecovered",
+            "columnName": "case_by_country_total_recovered",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "newDeaths",
+            "columnName": "case_by_country_new_deaths",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "newCases",
+            "columnName": "case_by_country_new_cases",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "seriousCritical",
+            "columnName": "serious_critical",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "case_by_country_country_name_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "global_settings",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`global_settings_last_time_updated` INTEGER NOT NULL, `global_settings_id` TEXT NOT NULL, PRIMARY KEY(`global_settings_id`))",
+        "fields": [
+          {
+            "fieldPath": "lastTimeUpdated",
+            "columnName": "global_settings_last_time_updated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "global_settings_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "global_settings_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18284ff1bd29d4c81f139847456c53fd')"
+    ]
+  }
+}
