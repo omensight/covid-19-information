@@ -1,8 +1,6 @@
 package com.alphemsoft.info.coronavirus.data.model
 
-import androidx.room.Ignore
-
-abstract class DbEntity<T>(){
+abstract class DbEntity<T>{
     abstract var id: T
     abstract override fun equals(other: Any?): Boolean
     override fun hashCode(): Int {

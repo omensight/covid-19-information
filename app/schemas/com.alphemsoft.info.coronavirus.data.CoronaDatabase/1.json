@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "18284ff1bd29d4c81f139847456c53fd",
+    "identityHash": "7e9ac6983184002b4ac7a52058641b8a",
     "entities": [
       {
         "tableName": "case_by_country",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`case_by_country_country_name_id` INTEGER NOT NULL, `case_by_country_cases` INTEGER NOT NULL, `case_by_country_deaths` INTEGER NOT NULL, `case_by_country_region` TEXT NOT NULL, `case_by_country_total_recovered` INTEGER NOT NULL, `case_by_country_new_deaths` INTEGER NOT NULL, `case_by_country_new_cases` INTEGER NOT NULL, `serious_critical` INTEGER NOT NULL, PRIMARY KEY(`case_by_country_country_name_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`case_by_country_country_name_id` TEXT NOT NULL, `case_by_country_cases` INTEGER NOT NULL, `case_by_country_deaths` INTEGER NOT NULL, `case_by_country_region` TEXT NOT NULL, `case_by_country_total_recovered` INTEGER NOT NULL, `case_by_country_new_deaths` INTEGER NOT NULL, `case_by_country_new_cases` INTEGER NOT NULL, `case_by_country_serious_critical` INTEGER NOT NULL, `case_by_country_active_cases` INTEGER NOT NULL, `case_by_total_cases_per_1m_population` INTEGER NOT NULL, PRIMARY KEY(`case_by_country_country_name_id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "case_by_country_country_name_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -52,7 +52,19 @@
           },
           {
             "fieldPath": "seriousCritical",
-            "columnName": "serious_critical",
+            "columnName": "case_by_country_serious_critical",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activeCases",
+            "columnName": "case_by_country_active_cases",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "casesPerOneMillionPopulation",
+            "columnName": "case_by_total_cases_per_1m_population",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -96,7 +108,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18284ff1bd29d4c81f139847456c53fd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7e9ac6983184002b4ac7a52058641b8a')"
     ]
   }
 }

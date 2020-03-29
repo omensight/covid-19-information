@@ -6,4 +6,8 @@
     <string name="title_total_recovered">Total recovered</string>
     <string name="title_new_deaths">New deaths</string>
     <string name="title_new_cases">Serious critical</string>
+    <string name="title_serious_critical">Serious critical</string>
+    <string name="title_active_cases">Active cases</string>
+    <string name="title_cases_per_one_million_population">Cases per one million population</string>
+    <string name="title_search_country">Search country</string>
 </resources>

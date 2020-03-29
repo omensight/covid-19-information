@@ -1,11 +1,12 @@
 package com.alphemsoft.info.coronavirus.ui.main
 
 import android.os.Bundle
-import androidx.annotation.CallSuper
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.alphemsoft.info.coronavirus.viewmodel.ViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,11 +18,24 @@ abstract class BaseFragment<VDB: ViewDataBinding, VM: ViewModel>: Fragment() {
     protected val backgroundCoroutineScope = CoroutineScope(job + Dispatchers.Default)
     protected lateinit var mDataBinding: VDB
     protected lateinit var mViewModel: VM
+    private set
     protected lateinit var mViewModelFactory: ViewModelFactory
+    private set
 
-    @CallSuper
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mViewModelFactory = ViewModelFactory(requireActivity().application)
+        mViewModel = getViewModel()
+        mDataBinding = getDataBinding(inflater, container)
+        return mDataBinding.root
     }
+
+    abstract fun getViewModel(): VM
+    abstract fun getDataBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): VDB
 }

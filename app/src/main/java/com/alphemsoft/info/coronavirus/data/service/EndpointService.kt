@@ -1,5 +1,6 @@
 package com.alphemsoft.info.coronavirus.data.service
 
+import com.alphemsoft.info.coronavirus.data.model.CaseByCountry
 import com.alphemsoft.info.coronavirus.data.remotemodel.CasesByCountryResponse
 import com.alphemsoft.info.coronavirus.data.remotemodel.CountryData
 import com.alphemsoft.info.coronavirus.data.remotemodel.CountryDataResponse
@@ -17,8 +18,11 @@ import retrofit2.http.Query
 
 interface EndpointService {
 
-    @GET("free-api")
-    fun getCountryInfo(@Query("countryTotal") countryCode: String):Call<CountryDataResponse>
+    @GET("cases_by_country.php")
+    fun getCasesByCountry(
+        @Header("x-rapidapi-host") api: String = "coronavirus-monitor.p.rapidapi.com",
+        @Header("x-rapidapi-key") key: String = "e222d78761mshe3a7d20e24b88f2p17d9d6jsn58124c0468fc"
+    ):Call<CasesByCountryResponse>
 
     companion object{
         fun create(): EndpointService{
@@ -26,10 +30,9 @@ interface EndpointService {
                 .registerTypeAdapter(Long::class.java, StrangeNumberDeserializer())
                 .create()
             val ret = Retrofit.Builder()
-            ret.addConverterFactory(GsonConverterFactory.create())
             ret.addConverterFactory(GsonConverterFactory.create(gson))
-//            ret.baseUrl("https://coronavirus-monitor.p.rapidapi.com/coronavirus/")
-            ret.baseUrl("https://thevirustracker.com/")
+            ret.baseUrl("https://coronavirus-monitor.p.rapidapi.com/coronavirus/")
+//            ret.baseUrl("https://thevirustracker.com/")
             return ret.build().create(EndpointService::class.java)
         }
     }

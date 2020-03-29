@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alphemsoft.info.coronavirus.data.model.DbEntity
 import com.alphemsoft.info.coronavirus.ui.list.viewholder.BaseViewHolder
 
-abstract class BaseAdapter<K, T: DbEntity<K>, VDB: ViewDataBinding, VH: BaseViewHolder<K,T, VDB>>: RecyclerView.Adapter<VH>(){
+abstract class BaseAdapter<T: Any, VDB: ViewDataBinding, VH: BaseViewHolder<T, VDB>>: RecyclerView.Adapter<VH>(){
     val items: MutableList<T> = ArrayList()
 
     fun addNewItems(newItems: List<T>){
         val diffUtil = DiffUtil.calculateDiff(object: DiffUtil.Callback(){
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return items[oldItemPosition].id == newItems[newItemPosition].id
+                return items[oldItemPosition] == newItems[newItemPosition]
             }
 
             override fun getOldListSize(): Int {
@@ -30,6 +30,9 @@ abstract class BaseAdapter<K, T: DbEntity<K>, VDB: ViewDataBinding, VH: BaseView
             }
 
         })
+        items.clear()
+        items.addAll(newItems)
+        diffUtil.dispatchUpdatesTo(this)
     }
 
     abstract fun createViewDataBinding(
