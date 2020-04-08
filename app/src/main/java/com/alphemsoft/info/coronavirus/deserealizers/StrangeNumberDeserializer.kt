@@ -13,6 +13,12 @@ class StrangeNumberDeserializer: JsonDeserializer<Long> {
     ): Long {
         val prim = json?.asString
         val cleanStr = prim?.replace(Regex("[^0-9]"), "")
-        return cleanStr?.toLong()?:0
+        return cleanStr?.let { safeStr->
+            if (safeStr.isNotEmpty()){
+                safeStr.toLong()?:0
+            }else{
+                0
+            }
+        }?:0
     }
 }

@@ -59,4 +59,8 @@ abstract class BaseAdapter<T: Any, VDB: ViewDataBinding, VH: BaseViewHolder<T, V
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(items[holder.adapterPosition])
     }
+
+    interface OnItemSelectedListener<T>{
+        fun onItemSelected(item: T)
+    }
 }

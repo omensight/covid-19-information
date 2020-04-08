@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 abstract class GlobalSettingsDao: BaseDao<GlobalSettings> {
 
     @Query("SELECT * FROM global_settings WHERE global_settings_id = :uniqueId")
-    abstract fun getGlobalSettingsFlow(uniqueId: String = GlobalSettings.UNIQUE_ID): Flow<GlobalSettings>
+    abstract fun getGlobalSettingsFlow(uniqueId: String = GlobalSettings.UNIQUE_ID): Flow<GlobalSettings?>
 
     @Query("SELECT * FROM global_settings WHERE global_settings_id = :uniqueId")
     abstract suspend fun getGlobalSettings(uniqueId: String = GlobalSettings.UNIQUE_ID): GlobalSettings?
+
 }

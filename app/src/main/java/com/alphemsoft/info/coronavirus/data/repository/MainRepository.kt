@@ -2,8 +2,9 @@ package com.alphemsoft.info.coronavirus.data.repository
 
 import com.alphemsoft.info.coronavirus.data.CoronaDatabase
 import com.alphemsoft.info.coronavirus.data.model.CaseByCountry
+import com.alphemsoft.info.coronavirus.data.model.GlobalSettings
 import com.alphemsoft.info.coronavirus.data.remotemodel.CasesByCountryResponse
-import com.alphemsoft.info.coronavirus.data.remotemodel.CountryDataResponse
+import com.alphemsoft.info.coronavirus.data.remotemodel.CountryHistoryResponse
 import com.alphemsoft.info.coronavirus.data.service.EndpointService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -20,11 +21,11 @@ class MainRepository (private val database: CoronaDatabase){
     private val backgroundCoroutineScope = CoroutineScope(job + Dispatchers.Default)
 
     fun getCasesByCountry(): Flow<List<CaseByCountry>> {
-        requestDataByCountryCode()
+        requestLatestCountryCases()
         return caseByCountryDao.getAllCasesByCountry()
     }
 
-    private fun requestDataByCountryCode() {
+    private fun requestLatestCountryCases() {
         val service = endpointService.getCasesByCountry()
         service.enqueue(object: Callback<CasesByCountryResponse>{
             override fun onFailure(call: Call<CasesByCountryResponse>, t: Throwable) {
@@ -32,13 +33,57 @@ class MainRepository (private val database: CoronaDatabase){
             }
 
             override fun onResponse(call: Call<CasesByCountryResponse>, response: Response<CasesByCountryResponse>) {
-                backgroundCoroutineScope.launch {
-                    response.body()?.affectedCountries?.let {
-                        caseByCountryDao.insert(*it.toTypedArray())
+                if (response.code() == 200){
+                    backgroundCoroutineScope.launch {
+                        val takenAt = response.body()?.statisticsTakenAt!!
+                        response.body()?.affectedCountries?.let {
+                            it.forEach { caseByCountry ->
+                                caseByCountry.id = caseByCountry.countryName.hashCode()
+                                caseByCountry.recordDate = takenAt
+                                caseByCountry.showable = true
+                            }
+                            caseByCountryDao.insert(*it.toTypedArray())
+                        }
+                        response.body()?.statisticsTakenAt?.let { updatedAt->
+                            val globalSettings = GlobalSettings(updatedAt)
+                            globalSettingsDao.insert(globalSettings)
+                        }
                     }
                 }
             }
 
         })
+    }
+
+    fun getCountryHistory(countryName: String): Flow<List<CaseByCountry>>{
+        requestCountryHistory(countryName)
+        return caseByCountryDao.findCountryHistory(countryName)
+    }
+
+    private fun requestCountryHistory(countryName: String) {
+        val call = endpointService.getCountryHistory(countryName)
+        call.enqueue(object: Callback<CountryHistoryResponse>{
+            override fun onFailure(call: Call<CountryHistoryResponse>, t: Throwable) {
+
+            }
+
+            override fun onResponse(
+                call: Call<CountryHistoryResponse>,
+                response: Response<CountryHistoryResponse>
+            ) {
+                if (response.isSuccessful){
+                    backgroundCoroutineScope.launch {
+                        response.body()?.statsByCountry?.let { countryHistory->
+                            caseByCountryDao.insert(*countryHistory.toTypedArray())
+                        }
+                    }
+                }
+            }
+
+        })
+    }
+
+    fun getGlobalSettings(): Flow<GlobalSettings?> {
+        return globalSettingsDao.getGlobalSettingsFlow()
     }
 }

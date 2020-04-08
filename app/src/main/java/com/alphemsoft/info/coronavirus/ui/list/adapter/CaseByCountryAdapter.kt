@@ -6,7 +6,7 @@ import com.alphemsoft.info.coronavirus.data.model.CaseByCountry
 import com.alphemsoft.info.coronavirus.databinding.ItemCaseByCountryBinding
 import com.alphemsoft.info.coronavirus.ui.list.viewholder.CaseByCountryViewHolder
 
-class CaseByCountryAdapter(): BaseAdapter<CaseByCountry, ItemCaseByCountryBinding, CaseByCountryViewHolder>() {
+class CaseByCountryAdapter(private val onItemSelectedListener: OnItemSelectedListener<CaseByCountry>): BaseAdapter<CaseByCountry, ItemCaseByCountryBinding, CaseByCountryViewHolder>() {
     override fun createViewDataBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup,
@@ -19,7 +19,7 @@ class CaseByCountryAdapter(): BaseAdapter<CaseByCountry, ItemCaseByCountryBindin
         viewDataBinding: ItemCaseByCountryBinding,
         viewType: Int
     ): CaseByCountryViewHolder {
-        return CaseByCountryViewHolder(viewDataBinding)
+        return CaseByCountryViewHolder(viewDataBinding, onItemSelectedListener)
     }
 
 }

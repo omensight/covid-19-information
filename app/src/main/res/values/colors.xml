@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#07479B</color>
-    <color name="colorPrimaryDark">#07479B</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#2196F3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorItemListBackground">#fff</color>
-    <color name="colorWindowBackground">#D3D3D3</color>
+    <color name="colorWindowBackground">#E4E4E4</color>
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#B2212121</color>
+
+    <color name="colorCases">#EF5350</color>
+    <color name="colorDeaths">#42A5F5</color>
+    <color name="colorNewDeaths">#000000</color>
+    <color name="colorActiveCases">#5C6BC0</color>
+    <color name="colorRecovered">#66BB6A</color>
 </resources>

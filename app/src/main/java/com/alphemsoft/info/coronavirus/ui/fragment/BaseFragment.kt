@@ -1,9 +1,12 @@
-package com.alphemsoft.info.coronavirus.ui.main
+package com.alphemsoft.info.coronavirus.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -13,6 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
 abstract class BaseFragment<VDB: ViewDataBinding, VM: ViewModel>: Fragment() {
+
+    protected val mTag = javaClass.simpleName
+
     private val job = Job()
     protected val foregroundCoroutineScope = CoroutineScope(job + Dispatchers.Main)
     protected val backgroundCoroutineScope = CoroutineScope(job + Dispatchers.Default)
@@ -38,4 +44,18 @@ abstract class BaseFragment<VDB: ViewDataBinding, VM: ViewModel>: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): VDB
+
+    protected fun showDebugMessage(logMessage: String){
+        Log.println(Log.DEBUG, mTag, logMessage)
+    }
+
+    protected fun getColor(@ColorRes colorId: Int): Int {
+        return ContextCompat.getColor(requireActivity(), colorId)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+//        job.start()
+    }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_cases">Casos</string>
+    <string name="title_deaths">Decesos</string>
+    <string name="title_total_recovered">Total de recuperados</string>
+    <string name="title_new_deaths">Muertes durante el día</string>
+    <string name="title_new_cases">Casos nuevos</string>
+    <string name="title_serious_critical">Pacientes críticos</string>
+    <string name="title_active_cases">Casos activos</string>
+    <string name="title_cases_per_one_million_population">Casos por millón de población</string>
+    <string name="title_search_country">Buscar país</string>
+    <string name="title_date">Fecha</string>
+    <string name="loading">Cargando</string>
+    <string name="last_updated">Última vez actualizado en %s</string>
+</resources>

@@ -2,15 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7e9ac6983184002b4ac7a52058641b8a",
+    "identityHash": "822e761d2c22f21288c1ef93bab54899",
     "entities": [
       {
         "tableName": "case_by_country",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`case_by_country_country_name_id` TEXT NOT NULL, `case_by_country_cases` INTEGER NOT NULL, `case_by_country_deaths` INTEGER NOT NULL, `case_by_country_region` TEXT NOT NULL, `case_by_country_total_recovered` INTEGER NOT NULL, `case_by_country_new_deaths` INTEGER NOT NULL, `case_by_country_new_cases` INTEGER NOT NULL, `case_by_country_serious_critical` INTEGER NOT NULL, `case_by_country_active_cases` INTEGER NOT NULL, `case_by_total_cases_per_1m_population` INTEGER NOT NULL, PRIMARY KEY(`case_by_country_country_name_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`case_by_country_id` INTEGER NOT NULL, `case_by_country_country_name` TEXT NOT NULL, `case_by_country_cases` INTEGER NOT NULL, `case_by_country_deaths` INTEGER NOT NULL, `case_by_country_region` TEXT, `case_by_country_total_recovered` INTEGER NOT NULL, `case_by_country_new_deaths` INTEGER NOT NULL, `case_by_country_new_cases` INTEGER NOT NULL, `case_by_country_serious_critical` INTEGER NOT NULL, `case_by_country_active_cases` INTEGER NOT NULL, `case_by_total_cases_per_1m_population` INTEGER NOT NULL, `case_by_country_record_date` INTEGER, `case_by_country_showable` INTEGER NOT NULL, PRIMARY KEY(`case_by_country_id`))",
         "fields": [
           {
             "fieldPath": "id",
-            "columnName": "case_by_country_country_name_id",
+            "columnName": "case_by_country_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "countryName",
+            "columnName": "case_by_country_country_name",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -30,7 +36,7 @@
             "fieldPath": "region",
             "columnName": "case_by_country_region",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "totalRecovered",
@@ -67,11 +73,23 @@
             "columnName": "case_by_total_cases_per_1m_population",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "recordDate",
+            "columnName": "case_by_country_record_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "showable",
+            "columnName": "case_by_country_showable",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "case_by_country_country_name_id"
+            "case_by_country_id"
           ],
           "autoGenerate": false
         },
@@ -108,7 +126,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7e9ac6983184002b4ac7a52058641b8a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '822e761d2c22f21288c1ef93bab54899')"
     ]
   }
 }

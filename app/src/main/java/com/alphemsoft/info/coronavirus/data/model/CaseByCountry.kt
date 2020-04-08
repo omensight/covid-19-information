@@ -1,29 +1,33 @@
 package com.alphemsoft.info.coronavirus.data.model
 
-import androidx.databinding.BindingAdapter
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 @Entity(tableName = "case_by_country")
 data class CaseByCountry(
-    @SerializedName("country_name")
-    @ColumnInfo(name = "case_by_country_country_name_id")
+    @SerializedName("id")
+    @ColumnInfo(name = "case_by_country_id")
     @PrimaryKey
-    override var id: String,
+    override var id: Int,
 
-    @SerializedName("cases")
+    @SerializedName("country_name")
+    @ColumnInfo(name = "case_by_country_country_name")
+    var countryName: String,
+
+    @SerializedName("cases", alternate = ["total_cases"])
     @ColumnInfo(name = "case_by_country_cases")
     val cases : Long,
 
-    @SerializedName("deaths")
+    @SerializedName("deaths", alternate = ["total_deaths"])
     @ColumnInfo(name = "case_by_country_deaths")
     val deaths : Long,
 
     @SerializedName("region")
     @ColumnInfo(name = "case_by_country_region")
-    val region : String,
+    val region : String? = null,
 
     @SerializedName("total_recovered")
     @ColumnInfo(name = "case_by_country_total_recovered")
@@ -45,10 +49,19 @@ data class CaseByCountry(
     @ColumnInfo(name = "case_by_country_active_cases")
     val activeCases : Long,
 
-    @SerializedName("total_cases_per_1m_population")
+    @SerializedName("total_cases_per_1m_population", alternate = ["total_cases_per1m"])
     @ColumnInfo(name = "case_by_total_cases_per_1m_population")
-    val casesPerOneMillionPopulation : Long
-): DbEntity<String>(){
+    val casesPerOneMillionPopulation : Long,
+
+    @SerializedName("record_date")
+    @ColumnInfo(name = "case_by_country_record_date")
+    var recordDate: Date?,
+
+    @SerializedName("showable")
+    @ColumnInfo(name = "case_by_country_showable")
+    var showable: Boolean = false
+
+): DbEntity<Int>(){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -81,5 +94,18 @@ data class CaseByCountry(
         result = 31 * result + activeCases.hashCode()
         result = 31 * result + casesPerOneMillionPopulation.hashCode()
         return result
+    }
+    
+    fun isDifferent(other: CaseByCountry): Boolean {
+        if (cases != other.cases) return true
+        if (deaths != other.deaths) return true
+        if (region != other.region) return true
+        if (totalRecovered != other.totalRecovered) return true
+        if (newDeaths != other.newDeaths) return true
+        if (newCases != other.newCases) return true
+        if (seriousCritical != other.seriousCritical) return true
+        if (activeCases != other.activeCases) return true
+        if (casesPerOneMillionPopulation != other.casesPerOneMillionPopulation) return true
+        return false
     }
 }

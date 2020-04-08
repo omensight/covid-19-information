@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cases_by_country_navigation"
+    app:startDestination="@id/caseByCountryListFragment">
+
+    <fragment
+        android:id="@+id/caseByCountryListFragment"
+        android:name="com.alphemsoft.info.coronavirus.ui.main.CaseByCountryListFragment"
+        android:label="country_history_fragment"
+        tools:layout="@layout/cases_by_country_fragment" >
+        <action
+            android:id="@+id/action_caseByCountryListFragment_to_countryHistoryFragment"
+            app:destination="@id/countryHistoryFragment">
+
+        </action>
+        <argument
+            android:name="countryName"
+            app:argType="string"
+            app:nullable="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/countryHistoryFragment"
+        android:name="com.alphemsoft.info.coronavirus.ui.fragment.CountryHistoryFragment"
+        android:label="CountryHistoryFragment"
+        tools:layout="@layout/country_history_fragment">
+        <argument
+            android:name="countryName"
+            app:argType="string"
+            app:nullable="false"/>
+    </fragment>
+</navigation>
